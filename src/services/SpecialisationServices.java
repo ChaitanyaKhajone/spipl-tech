@@ -1,6 +1,7 @@
 package services;
 import static configaration.config.getConnection;
 import java.sql.*;
+import models.Specialisation;
 public class SpecialisationServices
 {
     public void addSpecialisation(String name)
@@ -69,14 +70,14 @@ public class SpecialisationServices
             System.err.println("\n Error = [ " + e.toString() + " ]\n");
         }
     }
-    public void updateSpecialisation(int id , String name)
+    public void updateSpecialisation(Specialisation s)
     {
         String sql = "update specialisation set name = ? where id = ?";
         try (Connection con = getConnection())
         {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1 , name);
-            ps.setInt(2 , id);
+            ps.setString(1 , s.getName());
+            ps.setInt(2 , s.getId());
             ps.executeUpdate();
             System.out.print("\n Specialisation Updated successfully ");
         }
