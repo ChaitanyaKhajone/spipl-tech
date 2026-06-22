@@ -1,0 +1,62 @@
+body {
+    background-color: #ffffffdd;
+    font-family:'Times New Roman', Times, serif;
+}
+.dashboard-header {
+    background: #0d6efd;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.dashboard-header h2 {
+    margin: 0;
+}
+.card {
+    border: none;
+    border-radius: 10px;
+}
+.table th {
+    background-color: #0d6efd;
+    color: white;
+    text-align: center;
+}
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}
+.status-booked-JSON {
+    color: green !important;
+    font-weight: bold;
+}
+.status-cancelled-JSON {
+    color: red !important;
+    font-weight: bold;
+}
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    color: gray;
+}
+.form-control:focus,
+.form-select:focus {
+    box-shadow: none;
+    border-color: #0d6efd;
+}
+.card:hover {
+    transition: 0.3s;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+.status-booked-JSON {
+    color: green;
+    font-weight: bold;
+}
+.status-cancelled-JSON {
+    color: red;
+    font-weight: bold;
+}
+.table td,
+.table th {
+    text-align: center;
+    vertical-align: middle;
+}
