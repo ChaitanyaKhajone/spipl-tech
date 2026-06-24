@@ -36,7 +36,8 @@ public class SpecialisationServices
             ps.setInt(1 , id);
             ResultSet rs = ps.executeQuery();
             if (rs.next())
-                System.out.println("Specialisation name = " + rs.getString(1));
+                System.out.printf("ID : %-2d , Name : %-20s ,%n" ,
+                        rs.getInt(1) , rs.getString(2));
             else
                 System.err.println("\n specialisation not found");
         }
@@ -54,10 +55,10 @@ public class SpecialisationServices
             ResultSet rs = ps.executeQuery();
             if (rs.next())
             {
-                System.out.println("\n Specialisations Found");
+                System.out.println("\n  Specialisations Found");
                 do
                 {
-                    System.out.printf("ID : %d , Name: %s\n" ,
+                    System.out.printf("ID : %-2d , Name : %-20s ,%n" ,
                             rs.getInt(1) , rs.getString(2));
                 }
                 while (rs.next());

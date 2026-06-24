@@ -7,7 +7,7 @@ public class DocterServices
     public void addDoctor(Doctor d)
     {
         String insert = "INSERT INTO doctor(name,specialisationId,consultationFee) VALUES(?,?,?)";
-        String select = "SELECT id FROM doctor WHERE name = ? & specialisationId = ? & consultationFee = ?";
+        String select = "SELECT id FROM doctor WHERE name = ? and specialisationId = ? and consultationFee = ?";
         try (Connection con = getConnection())
         {
             // Insert
@@ -40,7 +40,7 @@ public class DocterServices
             ps.setInt(1 , id);
             ResultSet rs = ps.executeQuery();
             if (rs.next())
-            System.out.printf("ID : %d , Name : %s , specialisationId = %d , consultationFee = %.2f" ,
+                System.out.printf("ID: %-2d , Name: %-20s , Spec ID: %-2d , Fee: %-4.2f ,%n" ,
                         rs.getInt(1) , rs.getString(2) , rs.getInt(3) , rs.getDouble(4));
             else
                 System.err.println("\n specialisation not found");
@@ -62,7 +62,7 @@ public class DocterServices
                 System.out.println("\n Doctors Found");
                 do
                 {
-                    System.out.printf("ID : %d , Name : %s , specialisationId = %d , consultationFee = %.2f" ,
+                    System.out.printf("ID: %-2d , Name: %-25s , Spec ID: %-2d , Fee: %-4.2f ,%n" ,
                             rs.getInt(1) , rs.getString(2) , rs.getInt(3) , rs.getDouble(4));
                 }
                 while (rs.next());

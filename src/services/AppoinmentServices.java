@@ -1,29 +1,29 @@
 package services;
 import static configaration.config.getConnection;
 import java.sql.*;
-import models.Patient;
-public class PatientServices
+import models.Appointment;
+public class AppoinmentServices
 {
-    public void addPatient(Patient p)
+    public void addAppoinment(Appointment a)
     {
-        String insert = "INSERT INTO patient(name,age,gender,contact,address) VALUES(?,?,?,?,?)";
-        String select = "SELECT id FROM patient WHERE name = ? and age = ? and gender = ?";
+        String insert = "INSERT INTO appointment(doctor_id,patient_id,appointment_date,slot_time,status) VALUES(?,?,?,?,?)";
+        String select = "SELECT id FROM appointment WHERE doctor_id = ? and patient_id = ? and appointment_date = ?";
         try (Connection con = getConnection())
         {
             // Insert
             PreparedStatement ps = con.prepareStatement(insert);
-            ps.setString(1 , p.getName());
-            ps.setInt(2 , p.getAge());
-            ps.setString(3 , p.getGender());
-            ps.setString(4 , p.getContact());
-            ps.setString(5 , p.getAddress());
+            ps.setInt(1 , a.getDoctorId());
+            ps.setInt(2 , a.getPatientId());
+            ps.setString(3 , a.getAppointmentDate());
+            ps.setString(4 , a.getSlotTime());
+            ps.setString(5 , a.getStatus());
             ps.executeUpdate();
-            System.out.print("\n Patient added successfully ");
+            System.out.print("\n Appointment added successfully ");
             // Id
             ps = con.prepareStatement(select);
-            ps.setString(1 , p.getName());
-            ps.setInt(2 , p.getAge());
-            ps.setString(3 , p.getGender());
+            ps.setInt(1 , a.getDoctorId());
+            ps.setInt(2 , a.getPatientId());
+            ps.setString(3 , a.getAppointmentDate());
             ResultSet rs = ps.executeQuery();
             rs.next();
             System.out.println("with id = " + rs.getInt(1));
@@ -33,9 +33,9 @@ public class PatientServices
             System.err.println("\n Error = [ " + e.toString() + " ]\n");
         }
     }
-    public void searchPatient(int id)
+    public void searchAppoinment(int id)
     {
-        String select = "SELECT * FROM patient WHERE id = ?";
+        String select = "SELECT * FROM appointment WHERE id = ?";
         try (Connection con = getConnection())
         {
             PreparedStatement ps = con.prepareStatement(select);
@@ -43,37 +43,39 @@ public class PatientServices
             ResultSet rs = ps.executeQuery();
             if (rs.next())
             {
-                System.out.printf("ID: %-2d , Name: %-20s , Age: %-3d , Gender: %-6s , Contact: %-10s , Address: %-25s,%n" ,
+                System.out.printf("ID : %-2d , Doctor ID : %-2d , Patient ID : %-2d , Date : %-10s , Slot : %-5s , Status : %-10s ,%n" ,
                         rs.getInt(1) ,
-                        rs.getString(2) ,
+                        rs.getInt(2) ,
                         rs.getInt(3) ,
                         rs.getString(4) ,
                         rs.getString(5) ,
                         rs.getString(6));
             }
             else
-                System.err.println("\n Patient not found");
+            {
+                System.err.println("\n Appointment not found");
+            }
         }
         catch (SQLException e)
         {
             System.err.println("\n Error = [ " + e.toString() + " ]\n");
         }
     }
-    public void allPatients()
+    public void allAppoinments()
     {
-        String select = "SELECT * FROM patient";
+        String select = "SELECT * FROM appointment";
         try (Connection con = getConnection())
         {
             PreparedStatement ps = con.prepareStatement(select);
             ResultSet rs = ps.executeQuery();
             if (rs.next())
             {
-                System.out.println("\n Patients Found");
+                System.out.println("\n Appointments Found");
                 do
                 {
-                    System.out.printf("ID: %-2d , Name: %-20s , Age: %-3d , Gender: %-6s , Contact: %-10s , Address: %-25s,%n" ,
+                    System.out.printf("ID : %-2d , Doctor ID : %-2d , Patient ID : %-2d , Date : %-10s , Slot : %-5s , Status : %-10s ,%n" ,
                             rs.getInt(1) ,
-                            rs.getString(2) ,
+                            rs.getInt(2) ,
                             rs.getInt(3) ,
                             rs.getString(4) ,
                             rs.getString(5) ,
@@ -82,42 +84,44 @@ public class PatientServices
                 while (rs.next());
             }
             else
-                System.err.println("\n Patients not found");
+            {
+                System.err.println("\n Appointments not found");
+            }
         }
         catch (SQLException e)
         {
             System.err.println("\n Error = [ " + e.toString() + " ]\n");
         }
     }
-    public void updatePatient(Patient p)
+    public void updateAppoinment(Appointment a)
     {
-        String sql = "update patient set name = ? , age = ? , gender = ? , contact = ? , address = ?  where id = ?";
+        String sql = "update appointment set doctor_id = ? , patient_id = ? , appointment_date = ? , slot_time = ? , status = ?  where id = ?";
         try (Connection con = getConnection())
         {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1 , p.getName());
-            ps.setInt(2 , p.getAge());
-            ps.setString(3 , p.getGender());
-            ps.setString(4 , p.getContact());
-            ps.setString(5 , p.getAddress());
-            ps.setInt(6 , p.getId());
+            ps.setInt(1 , a.getDoctorId());
+            ps.setInt(2 , a.getPatientId());
+            ps.setString(3 , a.getAppointmentDate());
+            ps.setString(4 , a.getSlotTime());
+            ps.setString(5 , a.getStatus());
+            ps.setInt(6 , a.getId());
             ps.executeUpdate();
-            System.out.print("\n Patient Updated successfully ");
+            System.out.print("\n Appointment Updated successfully ");
         }
         catch (SQLException e)
         {
             System.err.println("\n Error = [ " + e.toString() + " ]\n");
         }
     }
-    public void deletePatient(int id)
+    public void deleteAppoinment(int id)
     {
-        String sql = "delete from patient where id = ?";
+        String sql = "delete from appointment where id = ?";
         try (Connection con = getConnection())
         {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1 , id);
             ps.executeUpdate();
-            System.out.print("\n Patient deleted successfully ");
+            System.out.print("\n Appointment deleted successfully ");
         }
         catch (SQLException e)
         {
